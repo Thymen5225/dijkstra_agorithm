@@ -101,3 +101,7 @@ def main():
 
 
 main()
+
+# todo prevent crashing when something is not possible
+# todo find other route searching algorithms
+# todo top input layer
