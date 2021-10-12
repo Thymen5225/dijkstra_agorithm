@@ -4,6 +4,8 @@ import numpy
 from dijkstra import create_graph_from_matrix, find_path, dijkstra
 import time
 import random
+from maze_generator import Generator
+
 
 pygame.init()
 width = 720
@@ -37,6 +39,18 @@ def random_borders(squares, matrix):
     return matrix
 
 
+def maze_borders(size, squares, matrix):
+    Maze = Generator(random.randint(0, size-1), random.randint(0, size-1), size, size)
+    new_matrix = []
+    for i in Maze.Grid:
+        new_matrix += i
+    matrix = new_matrix
+    for i in range(len(matrix)):
+        if matrix[i] == 1:
+            pygame.draw.rect(screen, (0, 0, 0), squares[i])
+    return matrix
+
+
 def left_pressed(squares, mx, my, matrix):
     for i in range(len(squares)):
         if squares[i].collidepoint(mx, my):
@@ -66,12 +80,13 @@ def draw_path(squares, path):
 
 
 def main():
-    size = 16
+    size = 24
     screen.fill((255, 255, 255))
     create_screen(size)
     squares = make_border(size)
     matrix = numpy.zeros(size ** 2)
-    matrix = random_borders(squares, matrix)
+    # matrix = random_borders(squares, matrix)
+    matrix = maze_borders(size, squares, matrix)
     begin = 0
     end = 0
     fs = 0
